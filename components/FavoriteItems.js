@@ -2,17 +2,16 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View ,Image} from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-export default function Favorite({title, description}) {
-   
+export default function FavoriteItems({title, description}) {
   return (
     <View style={styles.container}>
      
        <View style={styles.content}>
-           <Text style={styles.name}>{title}</Text>
-           <Text style={styles.price}>{description}</Text>
+           <Text style={styles.title}>{title}</Text>
+           <Text style={styles.description}>{description}</Text>
        </View>
        <MaterialCommunityIcons 
-        style={{alignSelf:"center"}} 
+        style={styles.icone} 
         name="delete"
         size={30}
        />
@@ -22,32 +21,26 @@ export default function Favorite({title, description}) {
 
 const styles = StyleSheet.create({
     container:{
-      flex:1,
-      flexDirection:"row",
-      marginBottom:5,
-      borderBottomWidth:"0.1",
-      borderBottomColor:"#841548"
+        flex:1,
+        flexDirection:"row",
+        borderRadius:30,
      
     },
-    image:{
-        height:120,
-        width:120,
-        margin:5
+    icone:{
+        marginBottom:5,
+        padding:2
     },
     content:{
-        justifyContent:"center",
-        marginLeft:5,
-        flex:1
+        flex:1,
+        borderBottomWidth:0.5
     },
-    name:{
+    title:{
         color:"green",
         fontSize:18,
-        marginBottom:5
+        fontWeight:"bold"
     },
-    price:{
-        color:"red",
-        fontSize:16,
-    }
+    
+  
   
 
 });

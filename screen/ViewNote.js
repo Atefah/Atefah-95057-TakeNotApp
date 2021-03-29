@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react'
-import {FlatList,View,StyleSheet,TouchableOpacity,Text,Image} from 'react-native'
+import {FlatList,View,StyleSheet,TouchableOpacity,Text,Image,ImageBackground} from 'react-native'
 import ListNote from '../components/listNote'
 import {Feather} from '@expo/vector-icons'
+
 import * as SQLite from 'expo-sqlite';
 const db = SQLite.openDatabase('takeNote.db');
-
 export default function ViewNote({navigation}){
     const [NoteList, setList] = useState([]);
     useEffect(()=>{
@@ -20,30 +20,28 @@ export default function ViewNote({navigation}){
     })
     const deleteList = (id) =>{
         db.transaction(tx =>{
-            tx.executeSql('select * from listNote where id = ?',[id]);
+            tx.executeSql('delete from listNote where id = ?',[id]);
         })
     }
-    const FavoriteList = (id) =>{
-        db.transaction(tx =>{
-            tx.executeSql('select from listNote where id = ?',[id]);
-        })
-    }
-    
-    
+
     return (
-          <View> 
+          <View style={styles.container}>
                {NoteList.length > 0 ? <FlatList 
                     data={NoteList}
                     keyExtractor={(item)=>item.id}
                     renderItem={({item}) => {
                         return <ListNote title={item.title} description={item.description}  onPress={()=> navigation.navigate('DetailsNote', item)} 
                         onDeleteList={() => deleteList(item.id)}
-                        onEditList={() => EditList(item.id)}
-                        onFavoriteList={() => FavoriteList(item.id)}
+
+                        onEditPress={() => navigation.navigate("EditNote", { item })}
+                        onFavoritePress={() => navigation.navigate("Favorite", { item })}
                         />
                     }}
                 />:<View style={styles.text}>
-                        <Text>no any note</Text>
+                        <Image
+                            style={styles.image}
+                            source={require('../assets/icon.png')}
+                        />
                     </View>}
                 <TouchableOpacity style={styles.FloatButton} onPress={()=> navigation.navigate('AddNote')}>
                    <Text>
@@ -55,12 +53,15 @@ export default function ViewNote({navigation}){
 }
 
 const styles = StyleSheet.create({
+    container:{
+        flex:1
+    },
     FloatButton:{
         backgroundColor: 'orange',
         padding:20,
         borderRadius:'50%',
         position:'absolute',
-        top:100,
+        bottom:0,
         right:10
       
     },
@@ -69,7 +70,13 @@ const styles = StyleSheet.create({
         marginTop:300,
         marginLeft:100
         
-    }
+    },
+    image: {
+        flex: 1,
+        height:100,
+        width:100,
+        justifyContent: "center"
+      },
    
 
 })

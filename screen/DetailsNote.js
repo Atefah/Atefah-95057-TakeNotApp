@@ -5,7 +5,7 @@ import DetailsListItem from '../components/DetailsListItem'
 export default function DetailsNote({route}){
 const {title, description} = route.params;
     return (
-          <View>
+          <View >
                 <DetailsListItem title = {title} description = {description} />
           </View>
     )

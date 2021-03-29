@@ -15,7 +15,7 @@ export default function DetailsListItem({title,description}){
 }
 const styles = StyleSheet.create({
     DetailsContainer:{
-       flexDirection:'row',
+        flex:1,
        paddingVertical:16,
        borderBottomWidth:0.5,
        borderBottomColor:colors.secondry

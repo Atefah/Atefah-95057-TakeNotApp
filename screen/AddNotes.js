@@ -3,7 +3,7 @@ import React,{useState, useEffect} from 'react';
 import {StyleSheet,TextInput,View,TouchableOpacity,Text} from 'react-native';
 import colors from '../utils/colors';
 import *as SQLite from 'expo-sqlite';
-import {IconButton ,FAB} from "react-native-paper";
+import {FAB} from "react-native-paper";
 const db =SQLite.openDatabase('takeNote.db');
 export default function AddNotes({navigation}){
     const [title, setTitle] = useState('');
@@ -55,17 +55,11 @@ const styles = StyleSheet.create({
         backgroundColor:'white',
 
     },
-    FloatButton:{
-        position:'absolute',
-        top:120,
-        left:280,
-    },
-    
+  
     fab:{
         position:'absolute',
-        right:0,
-        top:10,
-        marginTop:500
+        right:2,
+        marginTop:440
     },
     description:{
         height:300,
@@ -83,13 +77,6 @@ const styles = StyleSheet.create({
         borderColor:colors.secondry,
         borderWidth:2
     },
-    button:{
-        padding:20,
-        marginTop:20,
-        borderRadius:5,
-        justifyContent:'center',
-        alignItems:'center'
-    },
-  
+   
 
 })

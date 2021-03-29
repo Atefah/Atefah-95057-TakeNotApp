@@ -1,33 +1,51 @@
 
-import React,{useState, useEffect} from 'react';
-import {StyleSheet,TextInput,View,TouchableOpacity,Text} from 'react-native';
+import React, { useState } from "react";
+import {
+	View,
+	TextInput,
+	Text,
+	TouchableOpacity,
+	StyleSheet,
+	Alert,
+} from "react-native";
 import colors from '../utils/colors';
-import *as SQLite from 'expo-sqlite';
 import {FAB} from "react-native-paper";
+import * as SQLite from "expo-sqlite";
 const db =SQLite.openDatabase('takeNote.db');
-export default function EditNote({route}){
-    const {title, description} = route.params;
-    const EditList = (id) =>{
-        db.transaction(tx =>{
-            tx.executeSql('update listNote SET title ,description where id = ?',[id])
-        })
-    }
+
+export default function EditNote({ navigation, route }) {
+	const { title,description ,id} = route.params.item;
+	const [newTitle, setTitle] = useState(title);
+	const [newdescription, setDescription] = useState(description);
+
+	const update = () => {
+            db.transaction((tx) => {
+                tx.executeSql(
+                    "update listNote set title=?, description=? where id=?",
+                    [newTitle, newdescription,id],
+                    () => navigation.navigate("ViewNote")
+                );
+            });
+       
+	}
     return(
         <View style={styles.formContainer}>
             <TextInput 
                label="Add Note Title Here"
-               value={title}
+               value={newTitle}
                mode="outlined"
                style={styles.title}
+               onChangeText={(newTitle) => setTitle(newTitle)}
                 />
             <TextInput
                 placeholder='Description' 
-                value={description}
+                value={newdescription}
                 mode="flat"
                 multiline={true}
                 scrollEnabled={true}
                 returnKeyLabel="done"
                 blurOnSubmit={true}
+                onChangeText={(newdescription) => setDescription(newdescription)}
                 style={styles.description}/>
             
             <FAB
@@ -35,7 +53,7 @@ export default function EditNote({route}){
                 small
                 icon="check"
                 disabled={title == '' ? true : false}
-                onPress={() =>EditList()}
+                onPress={() =>update()}
             />
             
         </View>
@@ -59,8 +77,7 @@ const styles = StyleSheet.create({
     fab:{
         position:'absolute',
         right:0,
-        top:10,
-        marginTop:500
+        bottom:0,
     },
     description:{
         height:300,
