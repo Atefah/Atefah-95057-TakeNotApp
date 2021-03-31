@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "mobileApp",
-    "slug": "mobileApp",
+    "name": "foodDilevery",
+    "slug": "foodDilevery",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,14 +16,15 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios": {
-      "supportsTablet": true
-    },
+   
+
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package":"com.Atefah.foodDilevery",
+      "versionCode":1
     },
     "web": {
       "favicon": "./assets/favicon.png"
